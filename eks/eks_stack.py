@@ -31,3 +31,15 @@ class EksStack(cdk.Stack):
         _masters_role = _iam.Role.from_role_arn(self,"mastersrolearn",role_arn="arn:aws:iam::999999999999:role/testrole")
 
         _eks.AwsAuth(self, "aws-auth",cluster=_cluster).add_masters_role(role=_masters_role)
+
+        cdk.CfnOutput(
+            self,
+            "oidcendpointurl",
+            value=_cluster.cluster_open_id_connect_issuer_url
+        )
+
+        cdk.CfnOutput(
+            self,
+            "oidcendpoint",
+            value=_cluster.cluster_open_id_connect_issuer
+        )
