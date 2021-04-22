@@ -25,4 +25,5 @@ class EksStack(cdk.Stack):
                 _ec2.InstanceClass.MEMORY5, _ec2.InstanceSize.LARGE),
             output_cluster_name=True,
             output_config_command=True,
+            secrets_encryption_key=_secrets_key
         )
