@@ -1,5 +1,5 @@
 from aws_cdk import (core as cdk, aws_eks as _eks, aws_ec2 as _ec2, aws_kms as
-                     _kms)
+                     _kms, aws_iam as _iam)
 
 
 class EksStack(cdk.Stack):
@@ -27,3 +27,7 @@ class EksStack(cdk.Stack):
             output_config_command=True,
             secrets_encryption_key=_secrets_key
         )
+
+        _masters_role = _iam.Role.from_role_arn(self,"mastersrolearn",role_arn="arn:aws:iam::999999999999:role/testrole")
+
+        _eks.AwsAuth(self, "aws-auth",cluster=_cluster).add_masters_role(role=_masters_role)
